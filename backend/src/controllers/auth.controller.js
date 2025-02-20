@@ -1,6 +1,7 @@
 import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "../utils/generateVerificationToken.js";
+import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 
 export const signup = async (req, res) => {
     const {email, name,password} = req.body;
@@ -34,7 +35,7 @@ export const signup = async (req, res) => {
             }
         })
     } catch (error) {
-        res.staus(400).json({success:false, message: error.message});
+        res.status(400).json({success:false, message: error.message});
     }
 }
 

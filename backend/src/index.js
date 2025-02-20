@@ -15,6 +15,6 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 
 app.listen(PORT, ()=>{
-    connectDB();
     console.log(`Server running on port ${PORT}`);
+    connectDB();
 })
