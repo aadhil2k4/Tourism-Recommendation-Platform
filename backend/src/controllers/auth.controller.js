@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "../utils/generateVerificationToken.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
 import { sendVerificationEmail } from "../nodemailer/email.js";
+import crypto from "crypto";
 
 export const signup = async (req, res) => {
     const {email, name,password} = req.body;
@@ -69,9 +70,47 @@ export const verifyEmail = async (req, res) => {
 }
 
 export const login = async(req, res) => {
-    res.send("login route");
+    const {email, password} = req.body;
+    try {
+        const user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({success: false, message: "Invalid credentials"});
+        }
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if(!isPasswordValid){
+            res.status(400).json({success: false, message: "Invalid credentials"});
+        }
+        generateTokenAndSetCookie(res, user._id);
+        user.lastLogin = new Date();
+        await user.save();
+        res.status(200).json({
+            success: true, 
+            message: "Loggedin successfully",
+            user: {
+                ...user._doc,
+                passwod: undefined,
+            }
+        })
+    } catch (error) {
+        console.log("Error in login: ", error);
+        res.status(400).json({success: false, message: error.message});
+    }
+}
+
+export const forgotPassword = async(req, res) => {
+    const { email } = req.body;
+    try {
+        const user = await User.findOne({email});
+        if(!user){
+            res.status(400).json({success: false, message: "User doesnt exist"});
+        }
+
+    } catch (error) {
+        
+    }
 }
 
 export const logout = async(req, res) => {
-    res.send("Signup route");
+    res.clearCookie("token");
+    res.status(200).json({success: true, message: "Logged out successfully"});
 }

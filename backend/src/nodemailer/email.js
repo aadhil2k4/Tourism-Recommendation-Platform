@@ -2,7 +2,6 @@ import { transporter, sender } from "./nodemailer.config.js"
 import { VERIFICATION_EMAIL_TEMPLATE } from "./emailTemplates.js"
 
 export const sendVerificationEmail = async (email, verificationToken) => {
-    console.log("Recipient: ", email);
     try {
         const mail = {
             from: sender,
