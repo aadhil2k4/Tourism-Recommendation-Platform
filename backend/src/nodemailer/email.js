@@ -1,5 +1,5 @@
 import { transporter, sender } from "./nodemailer.config.js"
-import { VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE } from "./emailTemplates.js"
+import { VERIFICATION_EMAIL_TEMPLATE, PASSWORD_RESET_REQUEST_TEMPLATE, PASSWORD_RESET_SUCCESS_TEMPLATE } from "./emailTemplates.js"
 
 export const sendVerificationEmail = async (email, verificationToken) => {
     try {
@@ -33,5 +33,22 @@ export const sendPasswordResetEmail = async (email, resetURL) => {
     } catch (error) {
         console.log("Error in forgot password: ", error);
         throw new Error(`Error sending password reset Email: ${error}`)
+    }
+}
+
+export const sendResetSuccessEmail = async (email) => {
+    try {
+        const mail = {
+            from: sender,
+            to: email,
+            subject: "Password Reset Successful",
+            html: PASSWORD_RESET_SUCCESS_TEMPLATE,
+            category: "Password Reset"
+        }
+        const response = await transporter.sendMail(mail);
+        console.log("Password reset success mail sent successfully", response);
+    } catch (error) {
+        console.log("Error in reset password: ", error);
+        throw new Error(`Error sending password reset success Email: ${error}`)
     }
 }

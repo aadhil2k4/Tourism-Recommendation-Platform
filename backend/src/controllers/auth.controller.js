@@ -2,7 +2,7 @@ import { User } from "../models/user.model.js";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "../utils/generateVerificationToken.js";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js";
-import { sendVerificationEmail, sendPasswordResetEmail } from "../nodemailer/email.js";
+import { sendVerificationEmail, sendPasswordResetEmail, sendResetSuccessEmail } from "../nodemailer/email.js";
 import crypto from "crypto";
 import dotenv from "dotenv";
 
@@ -125,6 +125,28 @@ export const forgotPassword = async(req, res) => {
         console.log(`/${process.env.CLIENT_URL}/resetPassword/${resetToken}`)
     } catch (error) {
         
+    }
+}
+
+export const resetPassword = async(req, res) => {
+    const {token} = req.params;
+    const {password} = req.body;
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: token, 
+            resetPasswordExpiresAt: {$gt: Date.now()},
+        })
+        if(!user){
+            return res.status(400).json({success:false, message:"Invalid/Expired token"});
+        }
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        await sendResetSuccessEmail(user.email);
+        res.status(200).json({success: true, message: "Password reset successful"});
+    } catch (error) {
+        console.log("Error in reset Password: ", error);
+        res.status(400).json({success: false, message: error.message});
     }
 }
 
