@@ -2,6 +2,7 @@ import { useState } from "react";
 import authImageLight from "../assets/authImageLight.png";
 import { Mail, Lock, EyeOff, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
+import googleLogo from "../assets/googleLogo.svg";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState();
@@ -93,9 +94,9 @@ const LoginPage = () => {
         <div>
         <button className="flex items-center justify-center w-full border border-gray-300 rounded-lg py-3 px-4 font-medium mt-4">
   <img 
-  src="https://w7.pngwing.com/pngs/882/225/png-transparent-google-logo-google-logo-google-search-icon-google-text-logo-business-thumbnail.png" 
+  src={googleLogo}
     alt="Google logo" 
-    className="w-5 h-5 mr-2"
+    className="w-7 h-7 mr-4"
   />
   Continue with Google
 </button>
