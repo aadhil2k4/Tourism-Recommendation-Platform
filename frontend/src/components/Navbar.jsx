@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
-import { MapPinned, LogIn, LightbulbOff, Lightbulb } from "lucide-react";
+import { LogIn, LightbulbOff, Lightbulb } from "lucide-react";
 import { useThemeStore } from "../store/useThemeStore";
+import Logo from "../assets/logo.svg";
 
 const Navbar = () => {
   const { theme, setTheme }  = useThemeStore();
@@ -13,17 +14,17 @@ const Navbar = () => {
             <div className="flex items-center gap-8">
               <Link
                 to="/"
-                className="flex items-center gap-2.5 hover:opacity-80 transition-all"
+                className="flex items-center gap-2.5 hover:transition-all"
               >
-                <div className="size-9 rounded-lg bg-primary/10 flex items-center justify-center">
-                  <MapPinned className="w-5 h-5 text-primary" />
+                <div className="flex items-center justify-center">
+                  <img src={Logo} alt="Logo" className="w-10 h-10" />
                 </div>
                 <h1 className="text-lg font-bold">TravelMate</h1>
               </Link>
             </div>
             <div className="flex items-center gap-2">
               {theme === "light" ? (
-                <button className="btn btn-sm gap-2 transition-colors" onClick={() => setTheme("halloween")}>
+                <button className="btn btn-sm gap-2 transition-colors" onClick={() => setTheme("night")}>
                   <LightbulbOff className="w-4 h-4" />
                   <span className="hidden sm:inline">DarkMode</span>
                 </button>

@@ -10,7 +10,7 @@ const App = () => {
   return (
     <div data-theme={theme}>
       <Navbar />
-      {/*<HomePage />*/}
+      <HomePage />
       <LoginPage />
       <SignUpPage />
     </div>

@@ -3,21 +3,30 @@ import authImageLight from "../assets/authImageLight.png";
 import { Mail, Lock, EyeOff, Eye } from "lucide-react";
 import { Link } from "react-router-dom";
 import googleLogo from "../assets/googleLogo.svg";
+import { useThemeStore } from "../store/useThemeStore";
+import authImageDark from "../assets/authImageDark.jpg";
+
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState();
-  const [formData, setFormData] = useState();
+  const { theme } = useThemeStore();
+  //const [formData, setFormData] = useState();
 
   return (
     <div className="h-screen grid lg:grid-cols-2">
       {/** Left Side Image */}
       <div className="w-full h-screen hidden lg:block">
         <div className="w-full h-full">
-          <img
+          {theme=="light" ? (<img
             src={authImageLight}
             alt="Auth Light"
             className="object-cover w-full h-full"
-          />
+          />) : (
+            <img
+            src={authImageDark}
+            alt="Auth Dark"
+            className="object-cover w-full h-full" />
+          )}
         </div>
       </div>
       {/** Right Side Form */}
