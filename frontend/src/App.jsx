@@ -3,6 +3,7 @@ import { useThemeStore } from "./store/useThemeStore";
 import LoginPage  from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
+import VerifyEmailPage from "./pages/VerifyEmailPage";
 //import {Route, Routes} from "react-router-dom";
 
 const App = () => {
@@ -13,6 +14,7 @@ const App = () => {
       <HomePage />
       <LoginPage />
       <SignUpPage />
+      <VerifyEmailPage />
     </div>
   )
 }
