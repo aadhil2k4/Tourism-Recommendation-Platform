@@ -3,12 +3,16 @@ import authImageLight from "../assets/authImageLight.png";
 import authImageDark from "../assets/authImageDark.jpg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../store/useAuthStore";
+import toast from "react-hot-toast";
 
 const VerifyEmailPage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
   const { theme } = useThemeStore();
   const navigate = useNavigate();
+
+  const { error, isLoading, verifyEmail } = useAuthStore();
 
   const handleKeyChange = (value, index) => {
     const newCode = [...code];
@@ -36,17 +40,24 @@ const VerifyEmailPage = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const verificationCode = code.join("");
-    console.log("Verfication Code: ", verificationCode);
-  }
+    console.log(verificationCode);
+    try {
+      await verifyEmail(verificationCode);
+      navigate("/");
+      toast.success("Email verified Successfully");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-  useEffect(()=>{
-    if(code.every(digit=>digit!=="")){
+  useEffect(() => {
+    if (code.every((digit) => digit !== "")) {
       handleSubmit(new Event("submit"));
     }
-  }, [code])
+  }, [code]);
 
   return (
     <div className="h-screen grid lg:grid-cols-2">
@@ -89,12 +100,17 @@ const VerifyEmailPage = () => {
                   ref={(eL) => (inputRefs.current[index] = eL)}
                   onChange={(e) => handleKeyChange(e.target.value, index)}
                   onKeyDown={(e) => handleKeyDown(e, index)}
-                  className="w-12 h-12 text-center text-2xl font-medium rounded-lg input input-bordered"
+                  className="w-12 h-12 text-center text-2xl rounded-lg input input-bordered"
                 />
               ))}
             </div>
-            <button type="submit" className="btn btn-primary w-full">
-              Verify Email
+            {error && <p className='text-red-500 text-center font-semibold mt-2'>{error}</p>}
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={isLoading || code.some((digit) => !digit)}
+            >
+              {isLoading ? "Verifying.." : "Verify Email" }
             </button>
           </form>
         </div>

@@ -4,17 +4,21 @@ import LoginPage  from "./pages/LoginPage"
 import SignUpPage from "./pages/SignUpPage";
 import HomePage from "./pages/HomePage";
 import VerifyEmailPage from "./pages/VerifyEmailPage";
-//import {Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const { theme } = useThemeStore();
   return (
     <div data-theme={theme}>
       <Navbar />
-      <HomePage />
-      <LoginPage />
-      <SignUpPage />
-      <VerifyEmailPage />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/verifyEmail" element={<VerifyEmailPage />} />
+      </Routes>
+      <Toaster />
     </div>
   )
 }

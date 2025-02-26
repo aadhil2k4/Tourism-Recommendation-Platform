@@ -1,31 +1,44 @@
 import { useState } from "react";
 import authImageLight from "../assets/authImageLight.png";
-import { Mail, Lock, EyeOff, Eye } from "lucide-react";
+import { Mail, Lock, EyeOff, Eye, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import googleLogo from "../assets/googleLogo.svg";
 import { useThemeStore } from "../store/useThemeStore";
 import authImageDark from "../assets/authImageDark.jpg";
-
+import { useAuthStore } from "../store/useAuthStore";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState();
   const { theme } = useThemeStore();
-  //const [formData, setFormData] = useState();
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const { isLoading } = useAuthStore();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
     <div className="h-screen grid lg:grid-cols-2">
       {/** Left Side Image */}
       <div className="w-full h-screen hidden lg:block">
         <div className="w-full h-full">
-          {theme=="light" ? (<img
-            src={authImageLight}
-            alt="Auth Light"
-            className="object-cover w-full h-full"
-          />) : (
+          {theme == "light" ? (
             <img
-            src={authImageDark}
-            alt="Auth Dark"
-            className="object-cover w-full h-full" />
+              src={authImageLight}
+              alt="Auth Light"
+              className="object-cover w-full h-full"
+            />
+          ) : (
+            <img
+              src={authImageDark}
+              alt="Auth Dark"
+              className="object-cover w-full h-full"
+            />
           )}
         </div>
       </div>
@@ -37,7 +50,7 @@ const LoginPage = () => {
             <p className="text-base-content/60">Sign in to your account</p>
           </div>
           {/**SignIn Form */}
-          <form className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Email</span>
@@ -50,6 +63,9 @@ const LoginPage = () => {
                   type="email"
                   className="input input-bordered w-full pl-10"
                   placeholder="you@example.com"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
                 />
               </div>
             </div>
@@ -65,6 +81,9 @@ const LoginPage = () => {
                   type={showPassword ? "text" : "password"}
                   className="input input-bordered w-full pl-10"
                   placeholder="••••••••"
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
                 />
                 <button
                   type="button"
@@ -81,8 +100,13 @@ const LoginPage = () => {
                 </button>
               </div>
             </div>
-            <button type="submit" className="btn btn-primary w-full">
-              Sign in
+            <button type="submit" className="btn btn-primary w-full" disabled={isLoading}>
+              {isLoading ? (
+                <>
+                  <Loader className="animate-spin mx-auto" size={24} />
+                  Loading...
+                </>
+              ): "Sign in"}
             </button>
           </form>
           <div className="flex justify-between items-center mt-4 text-base-content/60 text-sm">
@@ -96,21 +120,19 @@ const LoginPage = () => {
               Forgot Password
             </Link>
           </div>
-          
         </div>
         <div className="text-center my-4">
-        <p className="px-3 text-sm">OR</p>
-        <div>
-        <button className="flex items-center justify-center w-full border border-gray-300 rounded-lg py-3 px-4 font-medium mt-4">
-  <img 
-  src={googleLogo}
-    alt="Google logo" 
-    className="w-7 h-7 mr-4"
-  />
-  Continue with Google
-</button>
-
-        </div>
+          <p className="px-3 text-sm">OR</p>
+          <div>
+            <button className="flex items-center justify-center w-full border border-gray-300 rounded-lg py-3 px-4 font-medium mt-4">
+              <img
+                src={googleLogo}
+                alt="Google logo"
+                className="w-7 h-7 mr-4"
+              />
+              Continue with Google
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -118,4 +140,3 @@ const LoginPage = () => {
 };
 
 export default LoginPage;
-

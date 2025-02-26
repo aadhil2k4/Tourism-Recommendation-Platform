@@ -1,12 +1,44 @@
 import { useState } from "react";
 import authImageLight from "../assets/authImageLight.png";
-import { Mail, Lock, EyeOff, Eye, UserRound } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Mail, Lock, EyeOff, Eye, UserRound, Loader } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import googleLogo from "../assets/googleLogo.svg";
+import { useAuthStore } from "../store/useAuthStore";
+import toast from "react-hot-toast";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState();
-  const [formData, setFormData] = useState();
+  const navigate = useNavigate();
+  const { signup, isLoading } = useAuthStore();
+
+  const validateForm = () => {
+    if (!formData.name.trim()) return toast.error("Full Name is required");
+    if (!formData.email.trim()) return toast.error("Email is required");
+    if (!/\S+@\S+\.\S+/.test(formData.email))
+      return toast.error("Invalid email format");
+    if (!formData.password) return toast.error("Password is required");
+    if (formData.password.length < 6)
+      return toast.error("Password must be at least 6 characters");
+    return true;
+  };
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const success = validateForm();
+    if(!success) return;
+    try {
+      await signup(formData);
+      navigate("/verifyEmail");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="h-screen grid lg:grid-cols-2">
@@ -30,8 +62,8 @@ const SignUpPage = () => {
             </p>
           </div>
           {/**SignIn Form */}
-          <form className="space-y-6">
-          <div className="form-control">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="form-control">
               <label className="label">
                 <span className="label-text font-medium">Name</span>
               </label>
@@ -40,9 +72,13 @@ const SignUpPage = () => {
                   <UserRound className="h-5 w-5 text-base-content/40" />
                 </div>
                 <input
-                  type="email"
+                  type="text"
                   className="input input-bordered w-full pl-10"
                   placeholder="John Doe"
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  value={formData.name}
                 />
               </div>
             </div>
@@ -58,6 +94,10 @@ const SignUpPage = () => {
                   type="email"
                   className="input input-bordered w-full pl-10"
                   placeholder="you@example.com"
+                  onChange={(e) =>
+                    setFormData({ ...formData, email: e.target.value })
+                  }
+                  value={formData.email}
                 />
               </div>
             </div>
@@ -73,6 +113,10 @@ const SignUpPage = () => {
                   type={showPassword ? "text" : "password"}
                   className="input input-bordered w-full pl-10"
                   placeholder="••••••••"
+                  onChange={(e) =>
+                    setFormData({ ...formData, password: e.target.value })
+                  }
+                  value={formData.password}
                 />
                 <button
                   type="button"
@@ -89,8 +133,19 @@ const SignUpPage = () => {
                 </button>
               </div>
             </div>
-            <button type="submit" className="btn btn-primary w-full">
-              Create Account
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                <Loader className="animate-spin mx-auto" size={24} />
+                Loading...
+                </>
+              ) : (
+                "Create Account"
+              )}
             </button>
           </form>
           <p className="text-center mt-4 text-base-content/60 text-md">
