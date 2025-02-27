@@ -1,15 +1,12 @@
 import { useState } from "react";
-import authImageLight from "../assets/authImageLight.png";
 import { Mail, Lock, EyeOff, Eye, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import googleLogo from "../assets/googleLogo.svg";
-import { useThemeStore } from "../store/useThemeStore";
-import authImageDark from "../assets/authImageDark.jpg";
 import { useAuthStore } from "../store/useAuthStore";
+import ImageCarousel from "../components/ImageCarousel";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState();
-  const { theme } = useThemeStore();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -27,19 +24,7 @@ const LoginPage = () => {
       {/** Left Side Image */}
       <div className="w-full h-screen hidden lg:block">
         <div className="w-full h-full">
-          {theme == "light" ? (
-            <img
-              src={authImageLight}
-              alt="Auth Light"
-              className="object-cover w-full h-full"
-            />
-          ) : (
-            <img
-              src={authImageDark}
-              alt="Auth Dark"
-              className="object-cover w-full h-full"
-            />
-          )}
+          <ImageCarousel />
         </div>
       </div>
       {/** Right Side Form */}

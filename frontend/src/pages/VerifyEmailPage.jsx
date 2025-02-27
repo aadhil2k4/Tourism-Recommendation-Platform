@@ -1,15 +1,12 @@
-import { useThemeStore } from "../store/useThemeStore";
-import authImageLight from "../assets/authImageLight.png";
-import authImageDark from "../assets/authImageDark.jpg";
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/useAuthStore";
 import toast from "react-hot-toast";
+import ImageCarousel from "../components/ImageCarousel";
 
 const VerifyEmailPage = () => {
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const inputRefs = useRef([]);
-  const { theme } = useThemeStore();
   const navigate = useNavigate();
 
   const { error, isLoading, verifyEmail } = useAuthStore();
@@ -64,19 +61,7 @@ const VerifyEmailPage = () => {
       {/** Left Side Image */}
       <div className="w-full h-screen hidden lg:block">
         <div className="w-full h-full">
-          {theme == "light" ? (
-            <img
-              src={authImageLight}
-              alt="Auth Light"
-              className="object-cover w-full h-full"
-            />
-          ) : (
-            <img
-              src={authImageDark}
-              alt="Auth Dark"
-              className="object-cover w-full h-full"
-            />
-          )}
+          <ImageCarousel />
         </div>
       </div>
       {/** Right Side Form */}

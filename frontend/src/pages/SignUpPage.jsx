@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import authImageLight from "../assets/authImageLight.png";
 import { Mail, Lock, EyeOff, Eye, UserRound, Loader } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import googleLogo from "../assets/googleLogo.svg";
 import { useAuthStore } from "../store/useAuthStore";
 import toast from "react-hot-toast";
+import ImageCarousel from "../components/ImageCarousel";
 
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState();
@@ -53,11 +53,7 @@ const SignUpPage = () => {
       {/** Left Side Image */}
       <div className="w-full h-screen hidden lg:block">
         <div className="w-full h-full">
-          <img
-            src={authImageLight}
-            alt="Auth Light"
-            className="object-cover w-full h-full"
-          />
+          <ImageCarousel />
         </div>
       </div>
       {/** Right Side Form */}
