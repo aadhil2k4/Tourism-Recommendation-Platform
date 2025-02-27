@@ -9,7 +9,7 @@ const HomePage = () => {
       <h1>TravelMate HomePage</h1>
       <h1>Hi {user.name}!!</h1>
       <h1>Thank You for Choosing Us</h1>
-      <h1>Dashboard Work in Progress</h1>
+      <h1>Dashboard Work in Progress...</h1>
     </div>
   )
 }

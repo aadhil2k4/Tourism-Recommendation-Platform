@@ -13,19 +13,35 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuthenticated, user } = useAuthStore();
+  const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
+
+  if (isCheckingAuth) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
+  }
+
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
-  if (!isAuthenticated || !user || !user.isVerified) {
+  if (!user?.isVerified) {
     return <Navigate to="/verifyEmail" replace />;
   }
   return children;
 };
 
 const RedirectAuthenticatedUser = ({ children }) => {
-  const { isAuthenticated, user } = useAuthStore();
-  if (isAuthenticated && user.isVerified) {
+  const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
+  if (isCheckingAuth) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <Loader className="size-10 animate-spin" />
+      </div>
+    );
+  }
+  if (isAuthenticated && user?.isVerified) {
     return <Navigate to="/" replace />;
   }
   return children;
@@ -33,7 +49,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
 
 const App = () => {
   const { theme } = useThemeStore();
-  const { isCheckingAuth, checkAuth, isAuthenticated, user } = useAuthStore();
+  const { isCheckingAuth, checkAuth, user } = useAuthStore();
 
   useEffect(() => {
     checkAuth();
@@ -92,6 +108,7 @@ const App = () => {
             </RedirectAuthenticatedUser>
           }
         />
+        <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
       <Toaster />
     </div>

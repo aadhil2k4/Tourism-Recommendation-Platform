@@ -68,7 +68,8 @@ export const verifyEmail = async (req, res) => {
             }
         })
     } catch (error) {
-        
+        console.log("error in verifyEmail ", error);
+		res.status(500).json({ success: false, message: "Server error" });
     }
 }
 
@@ -91,7 +92,7 @@ export const login = async(req, res) => {
             message: "Loggedin successfully",
             user: {
                 ...user._doc,
-                passwod: undefined,
+                password: undefined,
             }
         })
     } catch (error) {

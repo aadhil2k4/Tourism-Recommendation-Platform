@@ -56,12 +56,19 @@ export const useAuthStore = create((set) => ({
   checkAuth: async () => {
     set({ isCheckingAuth: true, error: null });
     try {
-      const response = await axiosInstance.get("/auth/checkAuth");
-      set({
-        user: response.data.user,
-        isAuthenticated: true,
-        isCheckingAuth: false,
+      const response = await axiosInstance.get("/auth/checkAuth", {
+        withCredentials: true,
       });
+
+      if (response.data.user) {
+        set({
+          user: response.data.user,
+          isAuthenticated: true,
+          isCheckingAuth: false,
+        });
+      } else {
+        set({ user: null, isAuthenticated: false, isCheckingAuth: false });
+      }
     } catch (error) {
       console.log(error.response.data.message);
       set({
@@ -121,6 +128,22 @@ export const useAuthStore = create((set) => ({
         isLoading: false,
         error: error.response.data.message || "Error resetting password",
       });
+      throw error;
+    }
+  },
+
+  logout: async () => {
+    set({ isLoading: true, error: null });
+    try {
+      await axiosInstance.post("/auth/logout");
+      set({
+        isLoading: false,
+        user: null,
+        isAuthenticated: false,
+        error: null,
+      });
+    } catch (error) {
+      set({ error: "Error logging out", isLoading: false });
       throw error;
     }
   },

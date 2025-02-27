@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
-import { LogIn, LightbulbOff, Lightbulb } from "lucide-react";
+import { LogIn, LightbulbOff, Lightbulb, LogOut } from "lucide-react";
 import { useThemeStore } from "../store/useThemeStore";
+import { useAuthStore } from "../store/useAuthStore";
 import Logo from "../assets/logo.svg";
 
 const Navbar = () => {
   const { theme, setTheme }  = useThemeStore();
+  const { user, logout } = useAuthStore();
 
   return (
     <div>
@@ -34,10 +36,18 @@ const Navbar = () => {
                     <span className="hidden sm:inline">LightMode</span>
                   </button>
                 )}
+                {!user ? (
                 <Link to={"/login"} className={`btn btn-sm gap-2 transition-colors`}>
                   <LogIn className="w-4 h-4" />
                   <span className="hidden sm:inline">LogIn</span>
                 </Link>
+                ) : (
+                  <button onClick={logout} className={`btn btn-sm gap-2 transition-colors`}>
+                  <LogOut className="w-4 h-4" />
+                  <span className="hidden sm:inline">Logout</span>
+                </button>
+                )
+                }
             </div>
           </div>
         </div>
