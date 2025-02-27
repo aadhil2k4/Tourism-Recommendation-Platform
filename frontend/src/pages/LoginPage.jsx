@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Mail, Lock, EyeOff, Eye, Loader } from "lucide-react";
 import { Link } from "react-router-dom";
 import googleLogo from "../assets/googleLogo.svg";
 import { useAuthStore } from "../store/useAuthStore";
 import ImageCarousel from "../components/ImageCarousel";
+import toast from "react-hot-toast";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState();
@@ -13,10 +14,17 @@ const LoginPage = () => {
     password: "",
   });
 
-  const { isLoading } = useAuthStore();
+  const { isLoading, login, error } = useAuthStore();
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    await login(formData);
   };
 
   return (

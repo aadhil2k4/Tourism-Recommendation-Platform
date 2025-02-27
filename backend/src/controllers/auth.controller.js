@@ -81,7 +81,7 @@ export const login = async(req, res) => {
         }
         const isPasswordValid = await bcrypt.compare(password, user.password);
         if(!isPasswordValid){
-            res.status(400).json({success: false, message: "Invalid credentials"});
+            return res.status(400).json({success: false, message: "Invalid credentials"});
         }
         generateTokenAndSetCookie(res, user._id);
         user.lastLogin = new Date();
