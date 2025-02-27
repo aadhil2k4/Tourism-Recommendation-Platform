@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { axiosInstance } from "../libs/axios.js";
-import toast from "react-hot-toast";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -21,10 +20,12 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: true,
         isLoading: false,
       });
+      return { status: "success", data: res.data };
     } catch (error) {
       set({ error: error.response.data.message || "Error signing up", isLoading: false });
       set({isLoading: false, isAuthenticated: false})
-      toast.error(error.response.data.message);
+      return { status: "error", message: error.response.data.message };
+      //toast.error(error.response.data.message);
     }
   },
 

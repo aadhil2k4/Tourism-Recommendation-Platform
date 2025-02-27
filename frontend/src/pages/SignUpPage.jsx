@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import authImageLight from "../assets/authImageLight.png";
 import { Mail, Lock, EyeOff, Eye, UserRound, Loader } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 const SignUpPage = () => {
   const [showPassword, setShowPassword] = useState();
   const navigate = useNavigate();
-  const { signup, isLoading } = useAuthStore();
+  const { error, signup, isLoading } = useAuthStore();
 
   const validateForm = () => {
     if (!formData.name.trim()) return toast.error("Full Name is required");
@@ -22,6 +22,12 @@ const SignUpPage = () => {
     return true;
   };
 
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -33,8 +39,10 @@ const SignUpPage = () => {
     const success = validateForm();
     if(!success) return;
     try {
-      await signup(formData);
-      navigate("/verifyEmail");
+      const response = await signup(formData);
+      if(response?.status === "success"){
+          navigate("/verifyEmail");
+      }
     } catch (error) {
       console.log(error);
     }

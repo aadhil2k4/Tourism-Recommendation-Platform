@@ -24,7 +24,7 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-2">
               {theme === "light" ? (
-                <button className="btn btn-sm gap-2 transition-colors" onClick={() => setTheme("night")}>
+                <button className="btn btn-sm gap-2 transition-colors" onClick={() => setTheme("dark")}>
                   <LightbulbOff className="w-4 h-4" />
                   <span className="hidden sm:inline">DarkMode</span>
                 </button>
