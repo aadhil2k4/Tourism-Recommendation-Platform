@@ -27,8 +27,8 @@ export const useAuthStore = create((set) => ({
         error: error.response.data.message || "Error signing up",
         isLoading: false,
       });
-      set({ isLoading: false, isAuthenticated: false });
-      return { status: "error", message: error.response.data.message };
+      throw error;
+      //return { status: "error", message: error.response.data.message };
       //toast.error(error.response.data.message);
     }
   },
@@ -63,12 +63,9 @@ export const useAuthStore = create((set) => ({
         isCheckingAuth: false,
       });
     } catch (error) {
-      console.error(
-        "Auth check failed:",
-        error.response?.data || error.message
-      );
+      console.log(error.response.data.message);
       set({
-        error: error.response?.data?.message || "Error checking auth",
+        error: null,
         isCheckingAuth: false,
         isAuthenticated: false,
       });

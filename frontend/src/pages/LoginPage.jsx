@@ -20,6 +20,9 @@ const LoginPage = () => {
     if (error) {
       toast.error(error);
     }
+    return () => {
+      useAuthStore.setState({ error: null });
+    };
   }, [error]);
 
   const handleSubmit = async (e) => {
