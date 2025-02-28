@@ -11,6 +11,7 @@ import { useEffect } from "react";
 import { Loader } from "lucide-react";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
+import SettingsPage from "./pages/SettingsPage";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
@@ -106,6 +107,14 @@ const App = () => {
             <RedirectAuthenticatedUser>
               <ResetPasswordPage />
             </RedirectAuthenticatedUser>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <SettingsPage />
+            </ProtectedRoute>
           }
         />
         <Route path='*' element={<Navigate to='/' replace />} />

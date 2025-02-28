@@ -8,7 +8,7 @@ export const VERIFICATION_EMAIL_TEMPLATE = `
 <body style="font-family: Arial, sans-serif;">
     <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 20px;">
         <div style="display: flex; align-items: center;">
-            <img src="logo.svg" alt="Travelmate Logo" style="height: 40px; margin-right: 10px;">
+            <img src="https://res.cloudinary.com/dsto8w9sb/image/upload/f_auto/v1740714598/logo_wwfzzt.svg" alt="Travelmate Logo" style="height: 40px; margin-right: 10px;">
             <h2 style="margin: 0; color: #000000;">Travelmate</h2>
         </div>
         <hr>
@@ -43,7 +43,7 @@ export const PASSWORD_RESET_SUCCESS_TEMPLATE = `
 <body style="font-family: Arial, sans-serif;">
     <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 20px;">
         <div style="display: flex; align-items: center;">
-            <img src="logo.svg" alt="Travelmate Logo" style="height: 40px; margin-right: 10px;">
+            <img src="https://res.cloudinary.com/dsto8w9sb/image/upload/f_auto/v1740714598/logo_wwfzzt.svg" alt="Travelmate Logo" style="height: 40px; margin-right: 10px;">
             <h2 style="margin: 0; color: #000000;">Travelmate</h2>
         </div>
         <hr>
@@ -85,7 +85,7 @@ export const PASSWORD_RESET_REQUEST_TEMPLATE = `
 <body style="font-family: Arial, sans-serif;">
     <div style="max-width: 600px; margin: auto; border: 1px solid #ddd; padding: 20px;">
         <div style="display: flex; align-items: center;">
-            <img src="logo.svg" alt="Your App Logo" style="height: 40px; margin-right: 10px;">
+            <img src="https://res.cloudinary.com/dsto8w9sb/image/upload/f_auto/v1740714598/logo_wwfzzt.svg" alt="Your App Logo" style="height: 40px; margin-right: 10px;">
             <h2 style="margin: 0; color: #000000;">Travelmate</h2>
         </div>
         <hr>

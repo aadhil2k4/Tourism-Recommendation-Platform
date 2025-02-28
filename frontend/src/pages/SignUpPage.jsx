@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Mail, Lock, EyeOff, Eye, UserRound, Loader } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
-import googleLogo from "../assets/googleLogo.svg";
+//import googleLogo from "../assets/googleLogo.svg";
 import { useAuthStore } from "../store/useAuthStore";
 import toast from "react-hot-toast";
 import ImageCarousel from "../components/ImageCarousel";
@@ -175,7 +175,7 @@ const SignUpPage = () => {
             </Link>
           </p>
         </div>
-        <div className="text-center my-4">
+        {/*<div className="text-center my-4">
           <p className="px-3 text-sm">OR</p>
           <div>
             <button className="flex items-center justify-center w-full border border-gray-300 rounded-lg py-3 px-4 font-medium mt-4">
@@ -187,7 +187,7 @@ const SignUpPage = () => {
               Continue with Google
             </button>
           </div>
-        </div>
+        </div>*/}
       </div>
     </div>
   );

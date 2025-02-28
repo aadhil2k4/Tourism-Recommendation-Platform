@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { LogIn, LightbulbOff, Lightbulb, LogOut } from "lucide-react";
+import { LogIn, LightbulbOff, Lightbulb, LogOut, User } from "lucide-react";
 import { useThemeStore } from "../store/useThemeStore";
 import { useAuthStore } from "../store/useAuthStore";
 import Logo from "../assets/logo.svg";
@@ -42,10 +42,16 @@ const Navbar = () => {
                   <span className="hidden sm:inline">LogIn</span>
                 </Link>
                 ) : (
+                  <>
+                   <Link to={"/profile"} className={`btn btn-sm gap-2`}>
+                <User className="size-5" />
+                <span className="hidden sm:inline">Profile</span>
+              </Link>
                   <button onClick={logout} className={`btn btn-sm gap-2 transition-colors`}>
                   <LogOut className="w-4 h-4" />
                   <span className="hidden sm:inline">Logout</span>
                 </button>
+              </>
                 )
                 }
             </div>

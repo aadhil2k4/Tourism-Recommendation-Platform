@@ -5,6 +5,7 @@ import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie.js
 import { sendVerificationEmail, sendPasswordResetEmail, sendResetSuccessEmail } from "../nodemailer/email.js";
 import crypto from "crypto";
 import dotenv from "dotenv";
+import cloudinary from "../utils/cloudinary.js"
 
 dotenv.config();
 
@@ -145,6 +146,7 @@ export const resetPassword = async(req, res) => {
         user.password = hashedPassword;
         user.resetPasswordToken = undefined;
         await sendResetSuccessEmail(user.email);
+        await user.save();
         res.status(200).json({success: true, message: "Password reset successful"});
     } catch (error) {
         console.log("Error in reset Password: ", error);
@@ -167,5 +169,22 @@ export const checkAuth = async(req, res) => {
     } catch (error) {
         console.log("Error in checkAuth ", error);
         res.staus(400).json({success: false, message: error.message});
+    }
+}
+
+export const updateProfile = async (req, res) => {
+    try{
+        const { profilePic } = req.body;
+        const userId = req.userId;
+        console.log("UserId: ", userId);
+        if(!profilePic){
+            return res.status(400).json({message: "Profile pic is required"});
+        }
+        const uploadResponse = await cloudinary.uploader.upload(profilePic);
+        const updatedUser = await User.findByIdAndUpdate(userId, { profilePic: uploadResponse.secure_url }, {new:true});
+        res.status(200).json(updatedUser);
+    } catch (error) {
+        console.log("Error in updating user profile", error);
+        res.status(500).json({message: "Internal Server Error"});
     }
 }

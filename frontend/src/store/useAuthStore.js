@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { axiosInstance } from "../libs/axios.js";
+import toast from "react-hot-toast";
 
 export const useAuthStore = create((set) => ({
   user: null,
@@ -126,7 +127,7 @@ export const useAuthStore = create((set) => ({
     } catch (error) {
       set({
         isLoading: false,
-        error: error.response.data.message || "Error resetting password",
+        error: error.response?.data?.message || "Error resetting password",
       });
       throw error;
     }
@@ -142,9 +143,25 @@ export const useAuthStore = create((set) => ({
         isAuthenticated: false,
         error: null,
       });
+      toast.success("Logged out successfully");
     } catch (error) {
       set({ error: "Error logging out", isLoading: false });
       throw error;
     }
   },
+
+  updateProfile: async (data) => {
+    set({isUpdatingProfile: true, isLoading: true, error: null});
+    try {
+      const res = await axiosInstance.put("/auth/updateProfile", data);
+      set({user: res.data});  
+      toast.success("Profile updated successfully");
+    } catch (error) {
+      set({isUpdatingProfile: false, isLoading: false});
+        console.log("Error in Update Profile ", error);
+        toast.error(error.response.data.message);
+    } finally {
+        set({isUpdatingProfile: false, isLoading: false});
+    }
+},
 }));

@@ -1,5 +1,5 @@
 import express from "express";
-import { signup, login, logout, verifyEmail, forgotPassword, resetPassword, checkAuth} from "../controllers/auth.controller.js";
+import { signup, login, logout, verifyEmail, forgotPassword, resetPassword, checkAuth, updateProfile} from "../controllers/auth.controller.js";
 import { protectRoute } from "../middleware/auth.middleware.js"
 
 const router = express.Router();
@@ -12,7 +12,9 @@ router.post("/logout", logout)
 
 router.post("/verifyEmail", verifyEmail);
 
-router.get("/checkAuth", protectRoute, checkAuth)
+router.get("/checkAuth", protectRoute, checkAuth);
+
+router.put("/updateProfile", protectRoute, updateProfile);
 
 router.post("/forgotPassword", forgotPassword);
 
