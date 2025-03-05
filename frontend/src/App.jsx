@@ -24,12 +24,12 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  if (!user?.isVerified) {
-    return <Navigate to="/verifyEmail" replace />;
-  }
+  // if (!isAuthenticated) {
+  //   return <Navigate to="/login" replace />;
+  // }
+  // if (!user?.isVerified) {
+  //   return <Navigate to="/verifyEmail" replace />;
+  // }
   return children;
 };
 

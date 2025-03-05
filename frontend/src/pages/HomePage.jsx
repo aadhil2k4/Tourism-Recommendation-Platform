@@ -1,15 +1,13 @@
-import { useAuthStore } from "../store/useAuthStore.js";
+// import { useAuthStore } from "../store/useAuthStore.js";
+import Sidebar from "../components/Sidebar"
 
 const HomePage = () => {
-
-  const { user } = useAuthStore();
-
+  // const {user} = useAuthStore();
   return (
-    <div className="h-screen pt-20 text-center">
-      <h1>TravelMate HomePage</h1>
-      <h1>Hi {user.name}!!</h1>
-      <h1>Thank You for Choosing Us</h1>
-      <h1>Dashboard Work in Progress...</h1>
+    <div className="h-screen">
+      <div className="flex items-center pt-20 px-4 h-full">
+      <Sidebar />
+      </div>
     </div>
   )
 }
