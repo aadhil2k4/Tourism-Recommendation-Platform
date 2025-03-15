@@ -6,6 +6,7 @@ import cors from "cors";
 import { connectDB } from "./db/connectDB.js";
 
 import authRoutes from "./routes/auth.Route.js";
+import quizRoutes from "./routes/quiz.Route.js";
 
 dotenv.config();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
+app.use("/api/quiz", quizRoutes);
 
 app.listen(PORT, ()=>{
     console.log(`Server running on port ${PORT}`);
