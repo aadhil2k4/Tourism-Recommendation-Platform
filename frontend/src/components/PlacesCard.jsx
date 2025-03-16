@@ -1,4 +1,7 @@
+import {useNavigate } from 'react-router-dom';
+
 const PlacesCard = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="w-full max-w-sm border-2 rounded-lg">
@@ -63,7 +66,7 @@ const PlacesCard = () => {
               </span>
             </div>
           </div>
-          <button className="btn btn-primary">Explore</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/destinations/${destination.id}`)}>Explore</button>
         </div>
       </div>
     </>

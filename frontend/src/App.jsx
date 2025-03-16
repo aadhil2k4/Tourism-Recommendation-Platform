@@ -13,6 +13,8 @@ import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import SettingsPage from "./pages/SettingsPage";
 import TrendsPage from "./pages/TrendsPage";
+import DestinationsPage from "./pages/DestinationsPage";
+import LandinPage from "./pages/LandinPage";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
@@ -25,12 +27,12 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  // if (!isAuthenticated) {
-  //   return <Navigate to="/login" replace />;
-  // }
-  // if (!user?.isVerified) {
-  //   return <Navigate to="/verifyEmail" replace />;
-  // }
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+  if (!user?.isVerified) {
+    return <Navigate to="/verifyEmail" replace />;
+  }
   return children;
 };
 
@@ -44,7 +46,7 @@ const RedirectAuthenticatedUser = ({ children }) => {
     );
   }
   if (isAuthenticated && user?.isVerified) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/dashboard/destinations" replace />;
   }
   return children;
 };
@@ -69,14 +71,21 @@ const App = () => {
     <div data-theme={theme}>
       <Navbar />
       <Routes>
-        <Route
+      <Route
           path="/"
+          element={<LandinPage />}
+        />
+        <Route
+          path="/dashboard"
           element={
             <ProtectedRoute>
               <HomePage />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<Navigate to="/dashboard/destinations" replace />} />
+          <Route path="destinations" element={<DestinationsPage />} />
+          </Route>
         <Route
           path="/login"
           element={

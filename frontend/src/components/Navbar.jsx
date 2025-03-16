@@ -15,7 +15,7 @@ const Navbar = () => {
           <div className="flex items-center justify-between h-full">
             <div className="flex items-center gap-8">
               <Link
-                to="/"
+                to={user ? '/dashboard/destinations' : '/'}
                 className="flex items-center gap-2.5 hover:transition-all"
               >
                 <div className="flex items-center justify-center">
