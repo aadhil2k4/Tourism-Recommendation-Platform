@@ -7,12 +7,12 @@ const PlacesCard = () => {
       <div className="w-full max-w-sm border-2 rounded-lg">
         <img
           className="p-3 h-auto max-w-full"
-          src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/17/15/6d/d6/paris.jpg?w=1400&h=1400&s=1"
+          src="https://images.pexels.com/photos/672532/pexels-photo-672532.jpeg?cs=srgb&dl=pexels-dominikagregus-672532.jpg&fm=jpg"
           alt="product image"
         />
         <div className="px-4 flex items-center justify-between">
           <div>
-            <h5 className="text-xl font-semibold">Paris, France</h5>
+            <h5 className="text-xl font-semibold">London, United Kingdom</h5>
             <div className="flex items-center mt-2.5 mb-5">
               <div className="flex items-center space-x-1 rtl:space-x-reverse">
                 <svg
@@ -66,7 +66,7 @@ const PlacesCard = () => {
               </span>
             </div>
           </div>
-          <button className="btn btn-primary" onClick={() => navigate(`/destinations/${destination.id}`)}>Explore</button>
+          <button className="btn btn-primary" onClick={() => navigate(`/dashboard/destinations/london`)}>Explore</button>
         </div>
       </div>
     </>

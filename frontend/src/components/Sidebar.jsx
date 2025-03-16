@@ -5,7 +5,7 @@ import {
   Heart,
   Search,
   Hotel,
-  Plane,
+  Newspaper,
   Users,
   FlaskConical,
 } from "lucide-react";
@@ -70,15 +70,15 @@ const Sidebar = () => {
           <span className="hidden sm:inline text-center">Community</span>
         </NavLink>
         <NavLink
-          to="/dashboard/flights"
+          to="/dashboard/news"
           className={({ isActive }) =>
             `flex items-center p-3 gap-3 transition-colors 
      hover:bg-base-300 hover:rounded-md 
      ${isActive ? "bg-base-300 rounded-md" : ""}`
           }
         >
-          <Plane className="w-5 h-5" />
-          <span className="hidden sm:inline text-center">Flights</span>
+          <Newspaper className="w-5 h-5" />
+          <span className="hidden sm:inline text-center">News</span>
         </NavLink>
         <NavLink
           to="/dashboard/hotels"

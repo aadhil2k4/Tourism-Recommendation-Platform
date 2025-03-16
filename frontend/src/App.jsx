@@ -15,6 +15,7 @@ import SettingsPage from "./pages/SettingsPage";
 import TrendsPage from "./pages/TrendsPage";
 import DestinationsPage from "./pages/DestinationsPage";
 import LandinPage from "./pages/LandinPage";
+import PlaceInfoPage from "./pages/PlaceInfoPage";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
@@ -85,6 +86,7 @@ const App = () => {
         >
           <Route index element={<Navigate to="/dashboard/destinations" replace />} />
           <Route path="destinations" element={<DestinationsPage />} />
+          <Route path="destinations/:placeId" element={<PlaceInfoPage />} />
           </Route>
         <Route
           path="/login"
