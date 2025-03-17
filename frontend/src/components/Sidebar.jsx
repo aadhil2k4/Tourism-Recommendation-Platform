@@ -12,7 +12,7 @@ import {
 
 const Sidebar = () => {
   return (
-    <aside className="h-full w-24 lg:w-44 border-r border-base-300 flex flex-col">
+    <aside className="h-full w-24 lg:w-44 border-r border-base-300 fixed flex flex-col z-40">
       <div className="overflow-y-auto px-3 text-center w-full py-3">
         <NavLink
           to="/dashboard/destinations"
