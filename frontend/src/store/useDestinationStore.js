@@ -7,6 +7,7 @@ export const useDestinationStore = create((set, get) => ({
     error: null,
     page: 1,
     hasMore: true,
+    selectedDestination: null,
 
     getDestinations: async() => {
         const { page, hasMore, destinations, isLoading } = get();
@@ -34,6 +35,18 @@ export const useDestinationStore = create((set, get) => ({
         } catch (error) {
             set({error: error.response.data.message || "Error fetching destinations", isLoading: false});
 
+        }
+    },
+
+    getDestinationById: async (id) => {
+        try {
+            console.log("id: ", id)
+            const res = await axiosInstance.get(`/destinations/destinationById/${id}`);
+            set({selectedDestination: res.data});
+        } catch (error) {
+            console.error("Error fetching destination:", error);
+            set({ selectedDestination: null, error: error.message });
+            return null;
         }
     }
 }))

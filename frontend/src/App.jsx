@@ -86,7 +86,7 @@ const App = () => {
         >
           <Route index element={<Navigate to="/dashboard/destinations" replace />} />
           <Route path="destinations" element={<DestinationsPage />} />
-          <Route path="destinations/:placeId" element={<PlaceInfoPage />} />
+          <Route path="destinations/:id" element={<PlaceInfoPage />} />
           </Route>
         <Route
           path="/login"

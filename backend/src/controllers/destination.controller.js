@@ -20,5 +20,13 @@ export const getDestinations = async (req, res) => {
 
 export const getDestinationById = async (req, res) => {
   try {
-  } catch (error) {}
+    const { id } = req.params;
+    const destination = await Destination.findById(id);
+    if(!destination){
+      return res.status(404).json({success: false, message: "Destination Not Found"});
+    }
+    res.status(200).json(destination);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
 };
