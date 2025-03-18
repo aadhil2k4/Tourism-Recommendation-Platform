@@ -12,7 +12,7 @@ import { Loader } from "lucide-react";
 import ForgotPasswordPage from "./pages/ForgotPasswordPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import SettingsPage from "./pages/SettingsPage";
-import TrendsPage from "./pages/TrendsPage";
+import QuizPage from "./pages/QuizPage";
 import DestinationsPage from "./pages/DestinationsPage";
 import LandinPage from "./pages/LandinPage";
 import PlaceInfoPage from "./pages/PlaceInfoPage";
@@ -87,6 +87,7 @@ const App = () => {
           <Route index element={<Navigate to="/dashboard/destinations" replace />} />
           <Route path="destinations" element={<DestinationsPage />} />
           <Route path="destinations/:id" element={<PlaceInfoPage />} />
+          <Route path="quiz" element={<QuizPage />} />
           </Route>
         <Route
           path="/login"
@@ -129,14 +130,14 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route
+        {/* <Route
           path="/trends"
           element={
             <ProtectedRoute>
               <TrendsPage />
             </ProtectedRoute>
           }
-        />
+        /> */}
         <Route path='*' element={<Navigate to='/' replace />} />
       </Routes>
       <Toaster />

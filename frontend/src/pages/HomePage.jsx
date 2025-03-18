@@ -8,7 +8,7 @@ const HomePage = () => {
         <div className="h-full">
           <Sidebar />
         </div>
-        <main className="ml-52 pr-3 py-3 overflow-y-auto h-[calc(100vh-5rem)]">
+        <main className="w-full ml-52 pr-3 py-3 overflow-y-auto h-[calc(100vh-5rem)]">
           <Outlet />
         </main>
       </div>
