@@ -1,5 +1,6 @@
 import {useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import DefaultDestination from "../assets/DefaultDestination.jpg";
 
 const PlacesCard = ({id, name, country, image, rating}) => {
   const navigate = useNavigate();
@@ -8,7 +9,7 @@ const PlacesCard = ({id, name, country, image, rating}) => {
       <div className="w-full max-w-sm border-2 rounded-lg">
         <img
           className="p-3 h-auto max-w-full"
-          src={image}
+          src={!image ? DefaultDestination : image}
           alt={image}
         />
         <div className="px-4 flex items-center justify-between">

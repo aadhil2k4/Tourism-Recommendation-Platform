@@ -11,9 +11,11 @@ const DestinationsPage = () => {
   }, []);
 
   const handleScroll = () => {
-    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    const { scrollHeight, clientHeight } = document.documentElement;
+    console.log("scrollHeight", scrollHeight);
+    console.log("clientHeight: ", clientHeight);
   
-    if (scrollTop + clientHeight >= scrollHeight - 200 && hasMore && !isLoading) {
+    if (scrollHeight === clientHeight && hasMore && !isLoading) {
       getDestinations();
     }
   };
@@ -40,6 +42,8 @@ const DestinationsPage = () => {
           />
         ))
       )}
+
+<button className="text-center items-center btn btn-error" onClick={() => handleScroll()}>Load More</button>
       
       {isLoading && (
         <div className="col-span-full flex justify-center py-4">
