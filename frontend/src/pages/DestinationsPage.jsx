@@ -1,6 +1,7 @@
 import PlacesCard from "../components/PlacesCard";
 import { useEffect } from "react";
 import { useDestinationStore } from "../store/useDestinationStore";
+import { ChevronDown } from "lucide-react";
 
 const DestinationsPage = () => {
   const { destinations, getDestinations, isLoading, hasMore } = useDestinationStore();
@@ -27,6 +28,7 @@ const DestinationsPage = () => {
   }, [hasMore, isLoading]);
 
   return (
+    <div>
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {destinations.length === 0 && !isLoading ? (
         <p>No destinations found.</p>
@@ -42,10 +44,11 @@ const DestinationsPage = () => {
           />
         ))
       )}
-
-<button className="text-center items-center btn btn-error" onClick={() => handleScroll()}>Load More</button>
-      
-      {isLoading && (
+    </div>
+    <div className="text-center mt-3 items-center">
+    <button className="btn rounded-3xl" onClick={() => handleScroll()}><ChevronDown /></button>
+    </div>
+    {isLoading && (
         <div className="col-span-full flex justify-center py-4">
           <p>Loading more destinations...</p>
         </div>

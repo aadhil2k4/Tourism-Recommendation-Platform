@@ -30,3 +30,20 @@ export const getDestinationById = async (req, res) => {
     res.status(500).json({ success: false, message: error.message });
   }
 };
+
+export const searchDestination = async(req, res) => {
+  try {
+    const q = req.query.q || ""; // Ensure query parameter is always a string
+
+    const destinations = await Destination.find({
+      $or: [
+        { "Destination Name": { $regex: q, $options: "i" } }, // Case-insensitive search
+        { Country: { $regex: q, $options: "i" } }
+      ]
+    });
+
+    return res.status(200).json({ destinations });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+}

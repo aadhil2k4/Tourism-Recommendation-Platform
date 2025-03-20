@@ -18,6 +18,8 @@ import LandinPage from "./pages/LandinPage";
 import PlaceInfoPage from "./pages/PlaceInfoPage";
 import HotelsPage from "./pages/HotelsPage";
 import NewsPage from "./pages/NewsPage";
+import PredictorPage from "./pages/PredictorPage";
+import DestinationSearchPage from "./pages/DestinationSearchPage";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
@@ -92,6 +94,8 @@ const App = () => {
           <Route path="quiz" element={<QuizPage />} />
           <Route path="hotels" element={<HotelsPage />} />
           <Route path="news" element={<NewsPage />} />
+          <Route path="predictor" element={<PredictorPage />} />
+          <Route path="search" element={<DestinationSearchPage />} />
           </Route>
         <Route
           path="/login"

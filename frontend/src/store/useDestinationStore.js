@@ -8,6 +8,7 @@ export const useDestinationStore = create((set, get) => ({
     page: 1,
     hasMore: true,
     selectedDestination: null,
+    searchedDestinations: [],
 
     getDestinations: async() => {
         const { page, hasMore, destinations, isLoading } = get();
@@ -48,5 +49,18 @@ export const useDestinationStore = create((set, get) => ({
             set({ selectedDestination: null, error: error.message });
             return null;
         }
+    },
+
+    searchDestination: async(query) => {
+        set({ isLoading: true, error: null });
+        try {
+            const res = await axiosInstance.get(`/destinations/search?q=${query}`);
+            set({ searchedDestinations: res.data.destinations, isLoading: false });
+        } catch (error) {
+            set({ error: error.response?.data?.message || "Search failed", isLoading: false });
+        }
+    },
+    clearSearchResults: () => {
+        set({ searchedDestinations: [] });
     }
 }))
