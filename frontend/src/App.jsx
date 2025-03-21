@@ -20,6 +20,7 @@ import HotelsPage from "./pages/HotelsPage";
 import NewsPage from "./pages/NewsPage";
 import PredictorPage from "./pages/PredictorPage";
 import DestinationSearchPage from "./pages/DestinationSearchPage";
+import WishListPage from "./pages/WishListPage";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, user, isCheckingAuth } = useAuthStore();
@@ -96,6 +97,7 @@ const App = () => {
           <Route path="news" element={<NewsPage />} />
           <Route path="predictor" element={<PredictorPage />} />
           <Route path="search" element={<DestinationSearchPage />} />
+          <Route path="wishlist" element={<WishListPage />} />
           </Route>
         <Route
           path="/login"

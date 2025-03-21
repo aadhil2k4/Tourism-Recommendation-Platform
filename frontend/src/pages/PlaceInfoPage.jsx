@@ -2,10 +2,12 @@ import { Heart } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { useDestinationStore } from '../store/useDestinationStore';
 import { useEffect } from 'react';
+import { useWishlistStore } from '../store/useWishlistStore';
 
 const PlaceInfoPage = () => {
   const { id } = useParams();
   const { selectedDestination, getDestinationById } = useDestinationStore();
+  const { wishlist, addToWishList, removeFromWishlist } = useWishlistStore();
 
   useEffect(() => {
     console.log("PlaceInfoPage id: ", id)
@@ -14,6 +16,16 @@ const PlaceInfoPage = () => {
 
   if (!selectedDestination) {
     return <p>Loading...</p>;
+  }
+
+  const isWishlisted = wishlist.some((destination) => destination._id === id);
+
+  const handleWishlistToggle = () => {
+    if (isWishlisted) {
+      removeFromWishlist(id);
+    } else {
+      addToWishList({ _id: id});
+    }
   }
 
   return (
@@ -43,9 +55,13 @@ const PlaceInfoPage = () => {
           <img src={selectedDestination.Image} className="w-full h-full object-cover" />
         </div>
       </div>
-      <button className='border-2'>
-        <Heart /> Add to Wishlist
-      </button>
+      <button 
+          className="border-2 flex items-center px-3 py-1 rounded-md mt-2" 
+          onClick={handleWishlistToggle}
+        >
+          <Heart className={`mr-2 ${isWishlisted ? "fill-red-500 text-red-500" : "text-gray-500"}`} /> 
+          {isWishlisted ? "Remove from Wishlist" : "Add to Wishlist"}
+        </button>
     </div>
   );
 };
