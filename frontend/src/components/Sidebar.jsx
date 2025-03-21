@@ -1,10 +1,10 @@
 import { NavLink } from "react-router-dom";
 import {
   House,
-  NotebookPen,
+  // NotebookPen,
   Heart,
   Search,
-  Hotel,
+  // Hotel,
   Newspaper,
   Bot,
   FlaskConical,
@@ -36,7 +36,7 @@ const Sidebar = () => {
           <Search className="w-5 h-5" />
           <span className="hidden sm:inline text-center">Search</span>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/dashboard/blogs"
           className={({ isActive }) =>
             `flex items-center p-3 gap-3 transition-colors 
@@ -46,7 +46,7 @@ const Sidebar = () => {
         >
           <NotebookPen className="w-5 h-5" />
           <span className="hidden sm:inline text-center">Blogs</span>
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/dashboard/wishlist"
           className={({ isActive }) =>
@@ -80,7 +80,7 @@ const Sidebar = () => {
           <Newspaper className="w-5 h-5" />
           <span className="hidden sm:inline text-center">News</span>
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/dashboard/hotels"
           className={({ isActive }) =>
             `flex items-center p-3 gap-3 transition-colors 
@@ -90,7 +90,7 @@ const Sidebar = () => {
         >
           <Hotel className="w-5 h-5" />
           <span className="hidden sm:inline text-center">Hotels</span>
-        </NavLink>
+        </NavLink> */}
         <NavLink
           to="/dashboard/quiz"
           className={({ isActive }) =>

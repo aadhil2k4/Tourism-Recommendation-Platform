@@ -9,6 +9,8 @@ export const getDestinations = async (req, res) => {
       Country: 1,
       Image: 1,
       "User Ratings (out of 5)": 1,
+      Latitude: 1,
+      Longitude: 1
     })
     .skip((page-1)*limit)
     .limit(limit);

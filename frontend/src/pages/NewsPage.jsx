@@ -12,7 +12,7 @@ const NewsPage = () => {
 
   return (
     <div>
-      {isLoading ? <Loader /> : (
+      {isLoading ? <Loader className="text-center m-auto animate-spin h-9 w-9"/> : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => (
           <NewsCard 
