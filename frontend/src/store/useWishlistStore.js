@@ -5,14 +5,15 @@ import { toast } from 'react-hot-toast';
 export const useWishlistStore = create((set) => ({
     wishlist: [],
     error: null,
+    isLoading: false,
 
     getWishList: async() => {
-        set({error: null});
+        set({error: null, isLoading: true});
         try {
             const res = await axiosInstance.get("/wishlist");
-            set({wishlist: res.data.wishlist});
+            set({wishlist: res.data.wishlist, isLoading: false});
         } catch (error) {
-            set({error: error.message});
+            set({error: error.message, isLoading: false});
             console.log("Error in getting wishlist: ", error.message);
         }
     },

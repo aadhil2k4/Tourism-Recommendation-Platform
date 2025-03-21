@@ -3,6 +3,9 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDestinationStore } from "../store/useDestinationStore";
 import PlacesCard from "../components/PlacesCard";
+import { Loader } from "lucide-react";
+import searchPage from "../assets/searchPage.svg";
+import destinationNotFound from "../assets/destinationNotFound.svg";
 
 const DestinationSearchPage = () => {
   const { searchedDestinations, searchDestination, isLoading, clearSearchResults } = useDestinationStore();
@@ -52,11 +55,29 @@ const DestinationSearchPage = () => {
           </div>
         </div>
       </form>
-      <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {searchedDestinations.length === 0 && !isLoading ? (
-          <p>No destinations found.</p>
-        ) : (
-            searchedDestinations.map((destination) => (
+
+      {isLoading && <Loader className="w-9 h-9 m-auto mt-6 animate-spin" />}
+
+      {/* Show searchPage image when nothing is entered */}
+      {query === "" && searchedDestinations.length === 0 && !isLoading && (
+        <div className="flex flex-col items-center mt-10">
+          <img src={searchPage} alt="Search Destination" className="w-72 h-72" />
+          <p className="text-center mt-4">Enter destination in searchbar to get results !!</p>
+        </div>
+      )}
+
+      {/* Show destinationNotFound image when no destinations are found */}
+      {query !== "" && searchedDestinations.length === 0 && !isLoading && (
+        <div className="flex flex-col items-center mt-10">
+          <img src={destinationNotFound} alt="Destination Not Found" className="w-72 h-72" />
+          <p className="text-center mt-4">No destinations found!!</p>
+        </div>
+      )}
+
+      {/* Show results if destinations are found */}
+      {searchedDestinations.length > 0 && !isLoading && (
+        <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {searchedDestinations.map((destination) => (
             <PlacesCard
               key={destination._id}
               id={destination._id}
@@ -65,9 +86,9 @@ const DestinationSearchPage = () => {
               image={destination.Image}
               rating={destination["User Ratings (out of 5)"]}
             />
-          ))
-        )}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
