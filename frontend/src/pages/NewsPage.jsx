@@ -12,6 +12,7 @@ const NewsPage = () => {
 
   return (
     <div>
+      <div className="text-center mb-3 text-2xl font-semibold">Latest Travel News</div>
       {isLoading ? <Loader className="text-center m-auto animate-spin h-9 w-9"/> : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {articles.map((article) => (

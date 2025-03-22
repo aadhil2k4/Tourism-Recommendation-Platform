@@ -1,7 +1,7 @@
 import PlacesCard from "../components/PlacesCard";
 import { useEffect } from "react";
 import { useDestinationStore } from "../store/useDestinationStore";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, Loader } from "lucide-react";
 
 const DestinationsPage = () => {
   const { destinations, getDestinations, isLoading, hasMore } = useDestinationStore();
@@ -29,6 +29,8 @@ const DestinationsPage = () => {
 
   return (
     <div>
+      <div className="text-center mb-3 text-2xl font-semibold">Top Destinations</div>
+      {isLoading && <Loader className="text-center m-auto animate-spin h-9 w-9"/>}
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {destinations.length === 0 && !isLoading ? (
         <p>No destinations found.</p>
