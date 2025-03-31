@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
 import {
   House,
-  // NotebookPen,
+  NotebookPen,
   Heart,
   Search,
-  // Hotel,
+  Users
+  ,
   Newspaper,
   Bot,
   FlaskConical,
@@ -101,6 +102,28 @@ const Sidebar = () => {
         >
           <FlaskConical className="w-5 h-5" />
           <span className="hidden sm:inline text-center">Quiz</span>
+        </NavLink>
+        <NavLink
+          to="/dashboard/quiz"
+          className={({ isActive }) =>
+            `flex items-center p-3 gap-3 transition-colors 
+     hover:bg-base-300 hover:rounded-md 
+     ${isActive ? "bg-base-300 rounded-md" : ""}`
+          }
+        >
+          <NotebookPen className="w-5 h-5" />
+          <span className="hidden sm:inline text-center">Blogs</span>
+        </NavLink>
+        <NavLink
+          to="/dashboard/quiz"
+          className={({ isActive }) =>
+            `flex items-center p-3 gap-3 transition-colors 
+     hover:bg-base-300 hover:rounded-md 
+     ${isActive ? "bg-base-300 rounded-md" : ""}`
+          }
+        >
+          <Users className="w-5 h-5" />
+          <span className="hidden sm:inline text-center">Community</span>
         </NavLink>
       </div>
     </aside>
