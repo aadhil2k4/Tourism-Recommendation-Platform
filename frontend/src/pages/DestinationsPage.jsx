@@ -2,14 +2,22 @@ import PlacesCard from "../components/PlacesCard";
 import { useEffect } from "react";
 import { useDestinationStore } from "../store/useDestinationStore";
 import { ChevronDown, Loader } from "lucide-react";
+import noQuiz from "../assets/noQuiz.svg";
 
 const DestinationsPage = () => {
-  const { destinations, getDestinations, isLoading, hasMore } = useDestinationStore();
+  const { destinations, getDestinations, isLoading, hasMore, quizTaken, fetchUserDetails } = useDestinationStore();
   console.log(destinations);
 
   useEffect(() => {
-    getDestinations();
-  }, []);
+    fetchUserDetails();
+}, []);
+
+useEffect(() => {
+    if (quizTaken) {
+        getDestinations();
+    }
+}, [quizTaken]);
+
 
   const handleScroll = () => {
     const { scrollHeight, clientHeight } = document.documentElement;
@@ -28,6 +36,13 @@ const DestinationsPage = () => {
   }, [hasMore, isLoading]);
 
   return (
+    <>
+    {!quizTaken? (
+      <div className="flex flex-col items-center mt-10">
+                <img src={noQuiz} alt="No quizTaken" className="w-80 h-80"/>
+                <p className="text-center">Take quiz to get personalized recomendations</p>
+                </div>
+    ) : (
     <div>
       <header className="text-center text-3xl font-bold rounded-lg mb-6">
         Top Destinations
@@ -64,6 +79,8 @@ const DestinationsPage = () => {
         </div>
       )}
     </div>
+    )}
+    </>
   );
 };
 

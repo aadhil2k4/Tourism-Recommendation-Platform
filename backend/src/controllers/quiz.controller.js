@@ -1,5 +1,6 @@
 import { Quiz } from "../models/quizQuestion.model.js"
 import { userResponse } from "../models/userResponse.model.js";
+import { User } from "../models/user.model.js";
 
 export const getQuestions = async(req, res) => {
     try {
@@ -10,18 +11,32 @@ export const getQuestions = async(req, res) => {
     }
 }
 
-export const userAnswers = async(req, res) => {
+export const userAnswers = async (req, res) => {
     const userId = req.userId;
-    const { answers} = req.body;
+    const { answers } = req.body;
+
     try {
         if (!answers || answers.length === 0) {
             return res.status(400).json({ success: false, message: "Answers are required" });
         }
-        const userAnswers = new userResponse({userId, answers});
-        await userAnswers.save();
-        res.status(200).json({success: true, message: "Answers saved successfully"});
+        const existingResponse = await userResponse.findOne({ userId });
+
+        if (existingResponse) {
+            existingResponse.answers = answers;
+            await existingResponse.save();
+            res.status(200).json({ success: true, message: "Answers updated successfully" });
+        } else {
+            const newUserResponse = new userResponse({ userId, answers });
+            await newUserResponse.save();
+            await User.findOneAndUpdate(
+                { _id: userId },
+                { $set: { quizTaken: true } },
+                { new: true }
+            );
+            res.status(200).json({ success: true, message: "Answers saved successfully" });
+        }
     } catch (error) {
         console.log("Error while saving answers: ", error);
-        res.status(500).json({success: false, error: error.message})
+        res.status(500).json({ success: false, error: error.message });
     }
-}
+};

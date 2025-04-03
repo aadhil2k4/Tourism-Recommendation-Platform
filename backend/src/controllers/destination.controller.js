@@ -1,22 +1,23 @@
 import { Destination } from "../models/destination.model.js";
 import { userResponse } from "../models/userResponse.model.js";
+import { User } from "../models/user.model.js"
 
 export const getDestinations = async (req, res) => {
   try {
-    const userId = req.userId; // Ensure req.userId is set from middleware/authentication
+    const userId = req.userId; 
     const userPreferences = await userResponse.findOne({ userId });
 
-    let filter = {}; // Default to an empty filter (fetch all if no preferences)
+    let filter = {}; 
 
     if (userPreferences && userPreferences.answers.length > 0) {
       const selectedOptions = userPreferences.answers.map(answer => answer.selectedOption);
 
       filter = {
         $or: [
-          { "Climate Type": { $in: selectedOptions } }, // Matches climate preferences
+          { "Climate Type": { $in: selectedOptions } },
           { "Best Visiting Season": { $in: selectedOptions } },
           { "Budget Level": { $in: selectedOptions } },
-          { "Crime Index": { $in: selectedOptions } }, // Matches crime index
+          { "Crime Index": { $in: selectedOptions } },
         ],
       };
     }
@@ -70,4 +71,21 @@ export const searchDestination = async(req, res) => {
   } catch (error) {
     return res.status(400).json({ message: error.message });
   }
-}
+};
+
+export const getUserDetails = async (req, res) => {
+  try {
+      const userId = req.userId; // Get user ID from token/session
+      const user = await User.findById(userId).select("quizTaken"); // Fetch only quizTaken field
+
+      if (!user) {
+          return res.status(404).json({ success: false, message: "User not found" });
+      }
+
+      res.status(200).json({ success: true, quizTaken: user.quizTaken });
+  } catch (error) {
+      console.error("Error fetching user details:", error);
+      res.status(500).json({ success: false, message: "Internal Server Error" });
+  }
+};
+

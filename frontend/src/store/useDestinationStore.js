@@ -9,9 +9,23 @@ export const useDestinationStore = create((set, get) => ({
     hasMore: true,
     selectedDestination: null,
     searchedDestinations: [],
+    quizTaken: false,
+
+    fetchUserDetails: async () => {
+        try {
+            const res = await axiosInstance.get("/destinations/userDetails");
+            if (res.data.success) {
+                set({ quizTaken: res.data.quizTaken });
+            }
+        } catch (error) {
+            console.error("Error fetching user details:", error);
+            set({ quizTaken: false }); 
+        }
+    },
 
     getDestinations: async() => {
-        const { page, hasMore, destinations, isLoading } = get();
+        const { page, hasMore, destinations, isLoading, quizTaken } = get();
+        if (!quizTaken) return;
         if(!hasMore || isLoading) return;
         set({isLoading: true});
         try {
