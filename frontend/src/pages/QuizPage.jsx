@@ -67,18 +67,18 @@ const QuizPage = () => {
                   key={option._id}
                   className={`border p-2 rounded-md cursor-pointer flex items-center space-x-2 ${
                     answers.some(answer => 
-                      answer.questionId === question._id && answer.selectedOption === option.optionValue
+                      answer.questionId === question._id && answer.selectedOption === option.optionText
                     ) ? "border-blue-500 bg-blue-100" : "border-gray-300"
                   }`}
                   >
                     <input
                       type="radio"
                       name={question._id}
-                      value={option.optionValue}
+                      value={option.optionText}
                       checked={answers.some(answer => 
-                        answer.questionId === question._id && answer.selectedOption === option.optionValue
+                        answer.questionId === question._id && answer.selectedOption === option.optionText
                       )}
-                      onChange={() => handleChange(question._id, option.optionValue)}
+                      onChange={() => handleChange(question._id, option.optionText)}
                       className="hidden"
                     />
                     <span>{option.optionText}</span> {/* ✅ Display option text */}

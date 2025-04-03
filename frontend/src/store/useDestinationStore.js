@@ -15,7 +15,7 @@ export const useDestinationStore = create((set, get) => ({
         if(!hasMore || isLoading) return;
         set({isLoading: true});
         try {
-            const res = await axiosInstance.get(`/destinations/allDestinations`, {params: {limit:18, page}});
+            const res = await axiosInstance.get(`/destinations/allDestinations`, {params: {limit:12, page}});
             console.log("API Response:", res.data);
             console.log(`Fetched Page ${page}:`, res.data);
             if(res.data.length < 9){
