@@ -1,14 +1,14 @@
 import { NavLink } from "react-router-dom";
 import {
   House,
-  NotebookPen,
+  // NotebookPen,
   Heart,
   Search,
-  Users
-  ,
+  // Users
   Newspaper,
   Bot,
   FlaskConical,
+  MapPin
 } from "lucide-react";
 
 const Sidebar = () => {
@@ -104,6 +104,17 @@ const Sidebar = () => {
           <span className="hidden sm:inline text-center">Quiz</span>
         </NavLink>
         <NavLink
+          to="/dashboard/explore"
+          className={({ isActive }) =>
+            `flex items-center p-3 gap-3 transition-colors 
+     hover:bg-base-300 hover:rounded-md 
+     ${isActive ? "bg-base-300 rounded-md" : ""}`
+          }
+        >
+          <MapPin className="w-5 h-5" />
+          <span className="hidden sm:inline text-center">Explore</span>
+        </NavLink>
+        {/* <NavLink
           to="/dashboard/quiz"
           className={({ isActive }) =>
             `flex items-center p-3 gap-3 transition-colors 
@@ -124,7 +135,7 @@ const Sidebar = () => {
         >
           <Users className="w-5 h-5" />
           <span className="hidden sm:inline text-center">Community</span>
-        </NavLink>
+        </NavLink> */}
       </div>
     </aside>
   );

@@ -3,10 +3,12 @@ import { useEffect } from "react";
 import { useDestinationStore } from "../store/useDestinationStore";
 import { ChevronDown, Loader } from "lucide-react";
 import noQuiz from "../assets/noQuiz.svg";
+import { useNavigate } from "react-router-dom";
 
 const DestinationsPage = () => {
   const { destinations, getDestinations, isLoading, hasMore, quizTaken, fetchUserDetails } = useDestinationStore();
   console.log(destinations);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchUserDetails();
@@ -35,12 +37,17 @@ useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasMore, isLoading]);
 
+  const handleQuizRedirect = () => {
+    navigate("/dashboard/quiz")
+  }
+
   return (
     <>
     {!quizTaken? (
       <div className="flex flex-col items-center mt-10">
                 <img src={noQuiz} alt="No quizTaken" className="w-80 h-80"/>
                 <p className="text-center">Take quiz to get personalized recomendations</p>
+                <button className="btn btn-primary mt-2" onClick={handleQuizRedirect} >Take Quiz</button>
                 </div>
     ) : (
     <div>

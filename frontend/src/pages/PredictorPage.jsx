@@ -1,7 +1,33 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const PredictorPage = () => {
   const [selectedOptions, setSelectedOptions] = useState({});
+  const [count, setCount] = useState(0);
+  const navigate = useNavigate()
+
+  const handleSubmit = () => {
+    if(count < 6 ){
+      toast.error("Select all fields");
+      return
+    }
+    const tripIds = [
+      "67d703ef43dacbd88cfbb5d2",
+      "67d703ef43dacbd88cfbb6c7",
+      "67d703ef43dacbd88cfbb6bc",
+      "67d703ef43dacbd88cfbb7bb",
+      "67d703ef43dacbd88cfbb6da",
+      "67d703ef43dacbd88cfbb7c1",
+      "67d703ef43dacbd88cfbb832",
+      "67d703ef43dacbd88cfbb600",
+      "67d703ef43dacbd88cfbb61f",
+      "67d703ef43dacbd88cfbb813",
+      "67d703ef43dacbd88cfbb58e",
+    ];
+    const trip = tripIds[Math.floor(Math.random() * tripIds.length)]; 
+    navigate(`/dashboard/destinations/${trip}`)
+  }
 
   const questions = [
     {
@@ -23,33 +49,6 @@ const PredictorPage = () => {
       ],
     },
     {
-      question: "How do you usually plan your trips?",
-      options: [
-        { label: "I love detailed itineraries", icon: "📅" },
-        { label: "I go with the flow and decide on the spot", icon: "🎒" },
-        { label: "I prefer a mix of planned and spontaneous activities", icon: "🔄" },
-        { label: "I let travel agencies or apps plan it for me", icon: "🏷️" }
-      ],
-    },
-    {
-      question: "What’s your ideal accommodation?",
-      options: [
-        { label: "Luxury hotel with all amenities", icon: "🏨" },
-        { label: "Cozy cabin or countryside retreat", icon: "🏡" },
-        { label: "Budget-friendly hostel or Airbnb", icon: "🛏️" },
-        { label: "Unique stays like treehouses or overwater bungalows", icon: "🌿" }
-      ],
-    },
-    {
-      question: "How do you like to explore a new city?",
-      options: [
-        { label: "Walking or biking around", icon: "🚶‍♂️🚲" },
-        { label: "Taking guided tours and learning about history", icon: "🏰" },
-        { label: "Trying local transportation (buses, trains, tuk-tuks)", icon: "🚋" },
-        { label: "Renting a car for road trips", icon: "🚗" }
-      ],
-    },
-    {
       question: "What’s your go-to vacation activity?",
       options: [
         { label: "Food tours and trying new cuisines", icon: "🍜" },
@@ -68,39 +67,12 @@ const PredictorPage = () => {
       ],
     },
     {
-      question: "What’s your dream travel destination?",
-      options: [
-        { label: "A European cultural hub like Paris or Rome", icon: "🏰" },
-        { label: "A tropical paradise like the Maldives or Bali", icon: "🌊" },
-        { label: "A nature retreat like the Swiss Alps or Patagonia", icon: "🏔️" },
-        { label: "A bustling city like Tokyo or New York", icon: "🌆" }
-      ],
-    },
-    {
-      question: "How do you prefer to experience local cuisine?",
-      options: [
-        { label: "Fine dining restaurants", icon: "🍽️" },
-        { label: "Street food and local markets", icon: "🌮" },
-        { label: "Cooking classes or food tours", icon: "🥘" },
-        { label: "Anything new—I love trying unique dishes", icon: "🍣" }
-      ],
-    },
-    {
       question: "What type of adventure do you enjoy most?",
       options: [
         { label: "Water-based activities (snorkeling, surfing, kayaking)", icon: "🌊" },
         { label: "Mountain-based activities (skiing, trekking, climbing)", icon: "🏔️" },
         { label: "Wildlife safaris and nature exploration", icon: "🦁" },
         { label: "Urban adventures and exploring new cultures", icon: "🏙️" }
-      ],
-    },
-    {
-      question: "How long is your ideal trip?",
-      options: [
-        { label: "A weekend getaway", icon: "🏕️" },
-        { label: "One to two weeks for full exploration", icon: "🏝️" },
-        { label: "A month-long slow travel experience", icon: "🗺️" },
-        { label: "As long as possible—I love extended travel!", icon: "✈️" }
       ],
     },
     {
@@ -112,38 +84,12 @@ const PredictorPage = () => {
         { label: "Social traveler—love meeting new people and nightlife", icon: "🎉" }
       ],
     },
-    {
-      question: "What’s your favorite mode of travel?",
-      options: [
-        { label: "Flights—quick and efficient", icon: "✈️" },
-        { label: "Trains—scenic and relaxing", icon: "🚆" },
-        { label: "Road trips—freedom to explore", icon: "🚙" },
-        { label: "Cruises—ocean adventures and luxury", icon: "🚢" }
-      ],
-    },
-    {
-      question: "What is a dealbreaker for you when traveling?",
-      options: [
-        { label: "Crowded and overly touristy places", icon: "🏟️" },
-        { label: "Extreme weather conditions", icon: "🌪️" },
-        { label: "Lack of good food options", icon: "🍽️" },
-        { label: "Poor connectivity or WiFi issues", icon: "📶" }
-      ],
-    },
-    {
-      question: "How do you like to remember your travels?",
-      options: [
-        { label: "Taking lots of photos and videos", icon: "📸" },
-        { label: "Buying souvenirs and local crafts", icon: "🏺" },
-        { label: "Writing travel journals or blogs", icon: "📝" },
-        { label: "Sharing experiences with friends and family", icon: "🎤" }
-      ],
-    }
   ]
   ;
 
   const handleSelection = (question, option) => {
     setSelectedOptions({ ...selectedOptions, [question]: option });
+    setCount(count+1)
   };
 
   return (
@@ -173,7 +119,7 @@ const PredictorPage = () => {
       ))
       }
       <div className="flex justify-center items-center">
-        <button type="submit" className="btn btn-primary">
+        <button type="button" className="btn btn-primary" onClick={handleSubmit}>
           Suggest Trip
         </button>
     </div>
