@@ -4,9 +4,13 @@ import "maplibre-gl/dist/maplibre-gl.css";
 import { MapPin, Star } from "lucide-react";
 import { axiosInstance } from "../libs/axios";
 import { format } from "timeago.js";
+import { useAuthStore } from "../store/useAuthStore.js"
+import {toast} from "react-hot-toast";
 
 const Explore = () => {
-  const currentUser = "jane"
+  const { user } = useAuthStore();
+  const currentUser = user.name
+  console.log(currentUser)
   const [viewState, setViewState] = useState({
     latitude: 46,
     longitude: 17,
@@ -34,6 +38,7 @@ const Explore = () => {
     try {
       const res = await axiosInstance.post("/pins", newPin);
       setPins([...pins, res.data]);
+      toast.success("Pin added successfully");
       setNewPlace(null);
       // Reset form fields
       setTitle("");
@@ -78,12 +83,12 @@ const Explore = () => {
       <Map
         {...viewState}
         onMove={(evt) => setViewState(evt.viewState)}
-        mapStyle="https://basemaps.cartocdn.com/gl/positron-gl-style/style.json"
         mapLib={import("maplibre-gl")}
         style={{ width: "100%", height: "100%" }}
         onDblClick={handleAddClick}
         doubleClickZoom={false} 
         transitionDuration="200"
+        mapStyle="https://tiles.stadiamaps.com/styles/outdoors.json"
       >
         {pins.map((p) => (
           <div key={p._id}>
@@ -171,8 +176,12 @@ const Explore = () => {
             closeOnClick={false}
             onClose={() => setNewPlace(null)}
             anchor="left"
+            transitionDuration="200"
+            offsetLeft={-viewState.zoom*3.5}
+              offsetTop={-viewState.zoom*7}
+            onMove={(evt) => setViewState(evt.viewState)}
           >
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className="bg-white p-3">
               <h3 className="text-xl font-semibold mb-4 text-gray-800">Add Your Review</h3>
               
               <form onSubmit={handleSubmit} className="space-y-4">
