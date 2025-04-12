@@ -24,6 +24,12 @@ export const userAnswers = async (req, res) => {
         if (existingResponse) {
             existingResponse.answers = answers;
             await existingResponse.save();
+            // Ensure quizTaken is updated even for an existing response
+            await User.findOneAndUpdate(
+                { _id: userId },
+                { $set: { quizTaken: true } },
+                { new: true }
+            );
             res.status(200).json({ success: true, message: "Answers updated successfully" });
         } else {
             const newUserResponse = new userResponse({ userId, answers });
@@ -40,3 +46,4 @@ export const userAnswers = async (req, res) => {
         res.status(500).json({ success: false, error: error.message });
     }
 };
+

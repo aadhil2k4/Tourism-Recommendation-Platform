@@ -46,7 +46,7 @@ useEffect(() => {
     {!quizTaken? (
       <div className="flex flex-col items-center mt-10">
                 <img src={noQuiz} alt="No quizTaken" className="w-80 h-80"/>
-                <p className="text-center">Take quiz to get personalized recomendations</p>
+                <h1 className="text-center">Take the quiz to get personalized recomendations</h1>
                 <button className="btn btn-primary mt-2" onClick={handleQuizRedirect} >Take Quiz</button>
                 </div>
     ) : (
