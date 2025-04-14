@@ -9,7 +9,6 @@ export const useDestinationStore = create((set, get) => ({
     hasMore: true,
     selectedDestination: null,
     searchedDestinations: [],
-    quizTaken: false,
 
     fetchUserDetails: async () => {
         try {
@@ -24,8 +23,7 @@ export const useDestinationStore = create((set, get) => ({
     },
 
     getDestinations: async() => {
-        const { page, hasMore, destinations, isLoading, quizTaken } = get();
-        if (!quizTaken) return;
+        const { page, hasMore, destinations, isLoading} = get()
         if(!hasMore || isLoading) return;
         set({isLoading: true});
         try {

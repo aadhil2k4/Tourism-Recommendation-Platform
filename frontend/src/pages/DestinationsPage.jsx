@@ -1,24 +1,45 @@
 import PlacesCard from "../components/PlacesCard";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDestinationStore } from "../store/useDestinationStore";
-import { ChevronDown, Loader } from "lucide-react";
-import noQuiz from "../assets/noQuiz.svg";
-import { useNavigate } from "react-router-dom";
+import { Loader } from "lucide-react";
 
 const DestinationsPage = () => {
-  const { destinations, getDestinations, isLoading, hasMore, quizTaken, fetchUserDetails } = useDestinationStore();
-  console.log(destinations);
-  const navigate = useNavigate();
+  const { destinations, getDestinations, isLoading, hasMore } = useDestinationStore();
+  // console.log(destinations);
 
-  useEffect(() => {
-    fetchUserDetails();
-}, []);
+  const sentinelRef = useRef(null);
+
 
 useEffect(() => {
-    if (quizTaken) {
+    {
         getDestinations();
     }
-}, [quizTaken]);
+}, []);
+
+
+useEffect(() => {
+  if (!hasMore || isLoading) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const [entry] = entries;
+      if (entry.isIntersecting) {
+        getDestinations();
+      }
+    },
+    { threshold: 0.1 }
+  );
+
+  if (sentinelRef.current) {
+    observer.observe(sentinelRef.current);
+  }
+
+  return () => {
+    if (sentinelRef.current) {
+      observer.unobserve(sentinelRef.current);
+    }
+  };
+}, [hasMore, isLoading, getDestinations]);
 
 
   const handleScroll = () => {
@@ -37,19 +58,8 @@ useEffect(() => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [hasMore, isLoading]);
 
-  const handleQuizRedirect = () => {
-    navigate("/dashboard/quiz")
-  }
-
   return (
     <>
-    {!quizTaken? (
-      <div className="flex flex-col items-center mt-10">
-                <img src={noQuiz} alt="No quizTaken" className="w-80 h-80"/>
-                <h1 className="text-center">Take the quiz to get personalized recomendations</h1>
-                <button className="btn btn-primary mt-2" onClick={handleQuizRedirect} >Take Quiz</button>
-                </div>
-    ) : (
     <div>
       <header className="text-center text-3xl font-bold rounded-lg mb-6">
         Top Destinations
@@ -72,8 +82,9 @@ useEffect(() => {
       )}
     </div>
     <div className="text-center mt-3 items-center">
-    <button className="btn rounded-3xl" onClick={() => handleScroll()}><ChevronDown /></button>
+    {/* <button className="btn rounded-3xl" onClick={() => handleScroll()}><ChevronDown /></button> */}
     </div>
+    <div ref={sentinelRef} className="h-1"></div>
     {isLoading && (
         <div className="col-span-full flex justify-center py-4">
           <p>Loading more destinations...</p>
@@ -86,7 +97,6 @@ useEffect(() => {
         </div>
       )}
     </div>
-    )}
     </>
   );
 };
