@@ -1,8 +1,10 @@
 import { Navigation } from "lucide-react";
 import { motion } from "framer-motion";
 import heroImage from "../assets/HeroImage.svg";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="min-h-screen pt-20 flex flex-col items-center justify-center relative overflow-hidden">
       {/* Gradient overlay */}
@@ -47,6 +49,7 @@ const Hero = () => {
         >
           Experience personalized travel recommendations powered by AI, explore over 1000+ destinations, and plan your dream vacation with local insights.
         </motion.p>
+        <button className="btn btn-primary" onClick={() => navigate("/signup")}>Try Now</button>
       </div>
     </section>
   );
